@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import StepIndicator from 'react-native-step-indicator';
 import Color from '../../../Global/Color';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Gilmer} from '../../../Global/FontFamily';
+import { Gilmer } from '../../../Global/FontFamily';
 import fetchData from '../../../Config/fetchData';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import common_fn from '../../../Config/common_fn';
 
 const customStyles = {
@@ -47,10 +47,11 @@ const customStyles = {
 };
 const labels = ['JobDetails', 'Salary & Benefits', 'Advance Information'];
 
-const AdvanceInformation = ({route}) => {
+const AdvanceInformation = ({ route }) => {
   const [jobTitle] = useState(route.params.jobTitle);
   const [selectedCategory] = useState(route.params.selectedCategory);
   const [selectedRole] = useState(route.params.selectedRole);
+  console.log("selectedRole   ",route.params,);
   const [selectedSkills] = useState(route.params.selectedSkills);
   const [selectedTags] = useState(route.params.selectedTags);
   const [description] = useState(route.params.description);
@@ -71,7 +72,7 @@ const AdvanceInformation = ({route}) => {
   const [applyVenueData, setApplyVenueData] = useState('');
   const [exactLocation, setExactLocation] = useState('');
   const userData = useSelector(state => state.UserReducer.userData);
-  var {token, country} = userData;
+  var { token, country } = userData;
 
   const [jobTypeData, setJobTypeData] = useState([]);
   const [educationData, setEducationData] = useState([]);
@@ -79,9 +80,9 @@ const AdvanceInformation = ({route}) => {
   const [DeadlineExpired, setDeadlineExpired] = useState('');
 
   const applyJobOnList = [
-    {label: 'App', value: 'app'},
-    {label: 'Email', value: 'email'},
-    {label: 'Website', value: 'website'},
+    { label: 'App', value: 'app' },
+    { label: 'Email', value: 'email' },
+    { label: 'Website', value: 'website' },
   ];
 
   useEffect(() => {
@@ -113,19 +114,24 @@ const AdvanceInformation = ({route}) => {
   const handleFromConfirm = date => {
     setDeadlineExpired(date);
   };
-  console.log('selectedCategory', selectedCategory);
+  // console.log('selectedCategory', selectedCategory);
   const postJob = async () => {
-    try {
+    try { 
+      
       if (
         (Education?.name != '' &&
           Experience?.name != '' &&
           jobType?.name != '' &&
           totalVacancies != '' &&
           DeadlineExpired != '' &&
-          exactLocation != '' &&
-          applyJobOn?.value == 'app') ||
-        (applyJobOn?.value != 'app' && applyVenueData != '')
+          exactLocation != ''
+          //   &&
+          //   applyJobOn?.value == 'app') ||
+          // (applyJobOn?.value != 'app' && applyVenueData != ''
+
+        )
       ) {
+       
         var data = {
           title: jobTitle,
           category_id: selectedCategory?.job_category_id,
@@ -164,8 +170,9 @@ const AdvanceInformation = ({route}) => {
           data.custom_salary = 'Competitive';
         }
         const post_data = await fetchData.job_post(data, token);
+        console.log("POST ============= :", post_data);
         if (post_data?.message == 'Job created successfully') {
-          navigation.replace('Congratulations', {id: post_data?.id});
+          navigation.replace('Congratulations', { id: post_data?.id });
           common_fn.showToast(post_data?.message);
         } else {
           common_fn.showToast(post_data?.message);
@@ -177,8 +184,10 @@ const AdvanceInformation = ({route}) => {
       console.log('error', error);
     }
   };
+
+
   return (
-    <View style={{flex: 1, padding: 10, backgroundColor: Color.white}}>
+    <View style={{ flex: 1, padding: 10, backgroundColor: Color.white }}>
       <StepIndicator
         customStyles={customStyles}
         currentPosition={2}
@@ -288,7 +297,7 @@ const AdvanceInformation = ({route}) => {
               setTotalVacancies(text);
             }}
           />
-          <View style={{marginVertical: 10}}>
+          <View style={{ marginVertical: 10 }}>
             <Text style={styles.h1}>
               Deadline Expired <Text style={styles.star}>*</Text>
             </Text>
@@ -421,8 +430,8 @@ const AdvanceInformation = ({route}) => {
                   applyJobOn?.value == 'website'
                     ? 'link'
                     : applyJobOn?.value == 'app'
-                    ? 'mobile'
-                    : 'mail'
+                      ? 'mobile'
+                      : 'mail'
                 }
                 size={20}
                 color={Color.smokeyGrey}
@@ -458,7 +467,7 @@ const AdvanceInformation = ({route}) => {
 
 export default AdvanceInformation;
 
-const {width, height} = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   container: {

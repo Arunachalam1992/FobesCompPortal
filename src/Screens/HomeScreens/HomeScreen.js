@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,26 +10,26 @@ import {
   ScrollView,
 } from 'react-native';
 import Color from '../../Global/Color';
-import {Gilmer} from '../../Global/FontFamily';
-import {ActivityIndicator, Button} from 'react-native-paper';
+import { Gilmer } from '../../Global/FontFamily';
+import { ActivityIndicator, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeIcon from 'react-native-vector-icons/Feather';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import {Media} from '../../Global/Media';
-import {TabView, TabBar} from 'react-native-tab-view';
+import { Media } from '../../Global/Media';
+import { TabView, TabBar } from 'react-native-tab-view';
 import moment from 'moment';
 import common_fn from '../../Config/common_fn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUserData} from '../../Redux';
-import {useDispatch, useSelector} from 'react-redux';
+import { setUserData } from '../../Redux';
+import { useDispatch, useSelector } from 'react-redux';
 import fetchData from '../../Config/fetchData';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import {base_image_url} from '../../Config/base_url';
-import {SafeAreaView} from 'react-native';
+import { base_image_url } from '../../Config/base_url';
+import { SafeAreaView } from 'react-native';
 import PrimeModal from '../../Componens/PrimeModal';
 
-const All = ({navigation, token, index}) => {
+const All = ({ navigation, token, index }) => {
   const [acticityData, setActivityData] = useState([]);
   const [SearchendReached, setSearchEndReached] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
@@ -90,7 +90,7 @@ const All = ({navigation, token, index}) => {
       };
       const job_view = await fetchData.company_profile_view(data, token);
       if (job_view?.status == 200) {
-        navigation.navigate('candidateDetails', {id: id});
+        navigation.navigate('candidateDetails', { id: id });
       } else {
         navigation.navigate('BuySubscriptions');
         common_fn.showToast(job_view?.message);
@@ -101,9 +101,9 @@ const All = ({navigation, token, index}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {activityLoading ? (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item style={{}}>
               <SkeletonPlaceholder.Item
@@ -167,7 +167,7 @@ const All = ({navigation, token, index}) => {
         <FlatList
           data={acticityData}
           keyExtractor={(item, index) => item + index}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -186,13 +186,13 @@ const All = ({navigation, token, index}) => {
                 }}>
                 {item?.image != null ? (
                   <Image
-                    source={{uri: base_image_url + item?.image}}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    source={{ uri: base_image_url + item?.image }}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 ) : (
                   <Image
                     source={Media.user}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 )}
                 <View
@@ -252,7 +252,7 @@ const All = ({navigation, token, index}) => {
                     name="phone-call"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
                 {item?.is_mailed == true && (
@@ -260,7 +260,7 @@ const All = ({navigation, token, index}) => {
                     name="mail"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
                 {item?.is_viewed == true && (
@@ -268,7 +268,7 @@ const All = ({navigation, token, index}) => {
                     name="account-search"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
               </TouchableOpacity>
@@ -278,26 +278,26 @@ const All = ({navigation, token, index}) => {
             loadMoreData();
           }}
           onEndReachedThreshold={3}
-          ListFooterComponent={() => {
-            return (
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                {loadMore && (
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: Color.black,
-                        marginHorizontal: 10,
-                        fontFamily: Gilmer.Medium,
-                      }}>
-                      Loading...
-                    </Text>
-                    <ActivityIndicator />
-                  </View>
-                )}
-              </View>
-            );
-          }}
+          // ListFooterComponent={() => {
+          //   return (
+          //     <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          //       {loadMore && (
+          //         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          //           <Text
+          //             style={{
+          //               fontSize: 12,
+          //               color: Color.black,
+          //               marginHorizontal: 10,
+          //               fontFamily: Gilmer.Medium,
+          //             }}>
+          //             Loading...
+          //           </Text>
+          //           <ActivityIndicator />
+          //         </View>
+          //       )}
+          //     </View>
+          //   );
+          // }}
           ListEmptyComponent={() => {
             return (
               <View
@@ -331,7 +331,7 @@ const All = ({navigation, token, index}) => {
     </SafeAreaView>
   );
 };
-const Called = ({navigation, token, index}) => {
+const Called = ({ navigation, token, index }) => {
   const [acticityData, setActivityData] = useState([]);
   const [SearchendReached, setSearchEndReached] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
@@ -393,7 +393,7 @@ const Called = ({navigation, token, index}) => {
       };
       const job_view = await fetchData.company_profile_view(data, token);
       if (job_view?.status == 200) {
-        navigation.navigate('candidateDetails', {id: id});
+        navigation.navigate('candidateDetails', { id: id });
       } else {
         navigation.navigate('BuySubscriptions');
         common_fn.showToast(job_view?.message);
@@ -403,9 +403,9 @@ const Called = ({navigation, token, index}) => {
     }
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {activityLoading ? (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item style={{}}>
               <SkeletonPlaceholder.Item
@@ -469,7 +469,7 @@ const Called = ({navigation, token, index}) => {
         <FlatList
           data={acticityData}
           keyExtractor={(item, index) => item + index}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -488,13 +488,13 @@ const Called = ({navigation, token, index}) => {
                 }}>
                 {item?.image != null ? (
                   <Image
-                    source={{uri: base_image_url + item?.image}}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    source={{ uri: base_image_url + item?.image }}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 ) : (
                   <Image
                     source={Media.user}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 )}
                 <View
@@ -551,7 +551,7 @@ const Called = ({navigation, token, index}) => {
                     name="phone-call"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
               </TouchableOpacity>
@@ -561,26 +561,26 @@ const Called = ({navigation, token, index}) => {
             loadMoreData();
           }}
           onEndReachedThreshold={3}
-          ListFooterComponent={() => {
-            return (
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                {loadMore && (
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: Color.black,
-                        marginHorizontal: 10,
-                        fontFamily: Gilmer.Medium,
-                      }}>
-                      Loading...
-                    </Text>
-                    <ActivityIndicator />
-                  </View>
-                )}
-              </View>
-            );
-          }}
+          // ListFooterComponent={() => {
+          //   return (
+          //     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          //       {loadMore && (
+          //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          //           <Text
+          //             style={{
+          //               fontSize: 12,
+          //               color: Color.black,
+          //               marginHorizontal: 10,
+          //               fontFamily: Gilmer.Medium,
+          //             }}>
+          //             Loading...
+          //           </Text>
+          //           <ActivityIndicator />
+          //         </View>
+          //       )}
+          //     </View>
+          //   );
+          // }}
           ListEmptyComponent={() => {
             return (
               <View
@@ -610,7 +610,7 @@ const Called = ({navigation, token, index}) => {
     </SafeAreaView>
   );
 };
-const Viewed = ({navigation, token, index}) => {
+const Viewed = ({ navigation, token, index }) => {
   const [acticityData, setActivityData] = useState([]);
   const [SearchendReached, setSearchEndReached] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
@@ -672,7 +672,7 @@ const Viewed = ({navigation, token, index}) => {
       };
       const job_view = await fetchData.company_profile_view(data, token);
       if (job_view?.status == 200) {
-        navigation.navigate('candidateDetails', {id: id});
+        navigation.navigate('candidateDetails', { id: id });
       } else {
         navigation.navigate('BuySubscriptions');
         common_fn.showToast(job_view?.message);
@@ -682,9 +682,9 @@ const Viewed = ({navigation, token, index}) => {
     }
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {activityLoading ? (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item style={{}}>
               <SkeletonPlaceholder.Item
@@ -748,7 +748,7 @@ const Viewed = ({navigation, token, index}) => {
         <FlatList
           data={acticityData}
           keyExtractor={(item, index) => item + index}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -767,13 +767,13 @@ const Viewed = ({navigation, token, index}) => {
                 }}>
                 {item?.image != null ? (
                   <Image
-                    source={{uri: base_image_url + item?.image}}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    source={{ uri: base_image_url + item?.image }}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 ) : (
                   <Image
                     source={Media.user}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 )}
                 <View
@@ -830,7 +830,7 @@ const Viewed = ({navigation, token, index}) => {
                     name="account-search"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
               </TouchableOpacity>
@@ -840,26 +840,26 @@ const Viewed = ({navigation, token, index}) => {
             loadMoreData();
           }}
           onEndReachedThreshold={3}
-          ListFooterComponent={() => {
-            return (
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                {loadMore && (
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: Color.black,
-                        marginHorizontal: 10,
-                        fontFamily: Gilmer.Medium,
-                      }}>
-                      Loading...
-                    </Text>
-                    <ActivityIndicator />
-                  </View>
-                )}
-              </View>
-            );
-          }}
+          // ListFooterComponent={() => {
+          //   return (
+          //     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          //       {loadMore && (
+          //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          //           <Text
+          //             style={{
+          //               fontSize: 12,
+          //               color: Color.black,
+          //               marginHorizontal: 10,
+          //               fontFamily: Gilmer.Medium,
+          //             }}>
+          //             Loading...
+          //           </Text>
+          //           <ActivityIndicator />
+          //         </View>
+          //       )}
+          //     </View>
+          //   );
+          // }}
           ListEmptyComponent={() => {
             return (
               <View
@@ -873,7 +873,7 @@ const Viewed = ({navigation, token, index}) => {
                   name="account-search"
                   size={20}
                   color={Color.primary}
-                  style={{padding: 10}}
+                  style={{ padding: 10 }}
                 />
                 <Text
                   style={{
@@ -894,7 +894,7 @@ const Viewed = ({navigation, token, index}) => {
     </SafeAreaView>
   );
 };
-const Mailed = ({navigation, token, index}) => {
+const Mailed = ({ navigation, token, index }) => {
   const [acticityData, setActivityData] = useState([]);
   const [SearchendReached, setSearchEndReached] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
@@ -956,7 +956,7 @@ const Mailed = ({navigation, token, index}) => {
       };
       const job_view = await fetchData.company_profile_view(data, token);
       if (job_view?.status == 200) {
-        navigation.navigate('candidateDetails', {id: id});
+        navigation.navigate('candidateDetails', { id: id });
       } else {
         navigation.navigate('BuySubscriptions');
         common_fn.showToast(job_view?.message);
@@ -966,9 +966,9 @@ const Mailed = ({navigation, token, index}) => {
     }
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {activityLoading ? (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item style={{}}>
               <SkeletonPlaceholder.Item
@@ -1032,7 +1032,7 @@ const Mailed = ({navigation, token, index}) => {
         <FlatList
           data={acticityData}
           keyExtractor={(item, index) => item + index}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -1051,13 +1051,13 @@ const Mailed = ({navigation, token, index}) => {
                 }}>
                 {item?.image != null ? (
                   <Image
-                    source={{uri: base_image_url + item?.image}}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    source={{ uri: base_image_url + item?.image }}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 ) : (
                   <Image
                     source={Media.user}
-                    style={{width: 70, height: 70, resizeMode: 'contain'}}
+                    style={{ width: 70, height: 70, resizeMode: 'contain' }}
                   />
                 )}
                 <View
@@ -1099,7 +1099,7 @@ const Mailed = ({navigation, token, index}) => {
                     name="mail"
                     size={20}
                     color={'#309CD2'}
-                    style={{padding: 10}}
+                    style={{ padding: 10 }}
                   />
                 )}
               </TouchableOpacity>
@@ -1109,26 +1109,26 @@ const Mailed = ({navigation, token, index}) => {
             loadMoreData();
           }}
           onEndReachedThreshold={3}
-          ListFooterComponent={() => {
-            return (
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                {loadMore && (
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: Color.black,
-                        marginHorizontal: 10,
-                        fontFamily: Gilmer.Medium,
-                      }}>
-                      Loading...
-                    </Text>
-                    <ActivityIndicator />
-                  </View>
-                )}
-              </View>
-            );
-          }}
+          // ListFooterComponent={() => {
+          //   return (
+          //     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          //       {loadMore && (
+          //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          //           <Text
+          //             style={{
+          //               fontSize: 12,
+          //               color: Color.black,
+          //               marginHorizontal: 10,
+          //               fontFamily: Gilmer.Medium,
+          //             }}>
+          //             Loading...
+          //           </Text>
+          //           <ActivityIndicator />
+          //         </View>
+          //       )}
+          //     </View>
+          //   );
+          // }}
           ListEmptyComponent={() => {
             return (
               <View
@@ -1159,25 +1159,25 @@ const Mailed = ({navigation, token, index}) => {
   );
 };
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [job_posting, setJobPosting] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [jobLoading, setJobLoading] = useState(false);
-  const [planLimit, setPlanLimit] = useState(0);
+  const [planLimit, setPlanLimit] = useState({});
   const [loading, setLoading] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const userData = useSelector(state => state.UserReducer.userData);
-  var {name, token} = userData;
+  var { name, token } = userData;
 
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'all', title: 'all'},
-    {key: 'called', title: 'called'},
-    {key: 'viewed', title: 'viewed'},
-    {key: 'mailed', title: 'mailed'},
+    { key: 'all', title: 'all' },
+    { key: 'called', title: 'called' },
+    { key: 'viewed', title: 'viewed' },
+    { key: 'mailed', title: 'mailed' },
   ]);
 
   useEffect(() => {
@@ -1240,7 +1240,7 @@ const HomeScreen = ({navigation}) => {
       const company_job = await fetchData.job_applicants(``, token);
       setJobPosting(company_job?.data);
       const category_data = await fetchData.job_Categories_list(``, token);
-      setCategoryData([{id: null, name: 'All Jobs'}, ...category_data?.data]);
+      setCategoryData([{ id: null, name: 'All Jobs' }, ...category_data?.data]);
     } catch (error) {
       console.log('error', error);
     }
@@ -1266,14 +1266,13 @@ const HomeScreen = ({navigation}) => {
   const getPlanLimit = useCallback(async () => {
     try {
       const PlanLimit = await fetchData.plan_limit(``, token);
-      console.log('PlanLimit?.data---------------------------------', PlanLimit?.data)
-      setPlanLimit(PlanLimit?.data?.job_limit);
+      setPlanLimit(PlanLimit?.data);
     } catch (error) {
       console.log('error', error);
     }
   }, [token, index]);
 
-  const renderScene = ({route}) => {
+  const renderScene = ({ route }) => {
     switch (route.key) {
       case 'all':
         return (
@@ -1321,7 +1320,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       {loading ? (
-        <View style={{marginHorizontal: 10}}>
+        <View style={{ marginHorizontal: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item style={{}}>
               <SkeletonPlaceholder.Item
@@ -1331,7 +1330,7 @@ const HomeScreen = ({navigation}) => {
                 marginTop={10}
               />
             </SkeletonPlaceholder.Item>
-            <SkeletonPlaceholder.Item style={{marginTop: 10}}>
+            <SkeletonPlaceholder.Item style={{ marginTop: 10 }}>
               <SkeletonPlaceholder.Item
                 width={150}
                 height={15}
@@ -1407,7 +1406,7 @@ const HomeScreen = ({navigation}) => {
                 />
               </SkeletonPlaceholder.Item>
             </SkeletonPlaceholder.Item>
-            <SkeletonPlaceholder.Item style={{marginTop: 10}}>
+            <SkeletonPlaceholder.Item style={{ marginTop: 10 }}>
               <SkeletonPlaceholder.Item
                 width={150}
                 height={15}
@@ -1502,7 +1501,7 @@ const HomeScreen = ({navigation}) => {
           </SkeletonPlaceholder>
         </View>
       ) : (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               backgroundColor: Color.primary,
@@ -1540,10 +1539,10 @@ const HomeScreen = ({navigation}) => {
                 mode="contained"
                 onPress={async () => {
                   try {
-                    planLimit == 0
+                    planLimit?.job_limit == 0 || planLimit?.job_limit == undefined
                       ? navigation.navigate('BuySubscriptions')
                       : navigation.navigate('JobDetails');
-                  } catch (err) {}
+                  } catch (err) { }
                 }}
                 style={{
                   backgroundColor: Color.white,
@@ -1580,8 +1579,8 @@ const HomeScreen = ({navigation}) => {
               <Icon color={Color.black} name="search" size={25} />
             </TouchableOpacity>
           </View>
-          <ScrollView contentContainerStyle={{flexGrow: 1}} nestedScrollEnabled>
-            <View style={{padding: 10, flex: 1}}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }} nestedScrollEnabled>
+            <View style={{ padding: 10, flex: 1 }}>
               <View
                 style={{
                   marginVertical: 10,
@@ -1603,7 +1602,7 @@ const HomeScreen = ({navigation}) => {
                   </Text>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('RecentJob')}
-                    style={{padding: 5}}>
+                    style={{ padding: 5 }}>
                     <Text
                       style={{
                         fontSize: 14,
@@ -1618,7 +1617,7 @@ const HomeScreen = ({navigation}) => {
                 <FlatList
                   data={categoryData}
                   keyExtractor={(item, index) => item + index}
-                  renderItem={({item, index}) => {
+                  renderItem={({ item, index }) => {
                     const isSelected = item.id === selectedCategoryId;
                     return (
                       <TouchableOpacity
@@ -1652,10 +1651,10 @@ const HomeScreen = ({navigation}) => {
                   showsHorizontalScrollIndicator={false}
                 />
                 {jobLoading ? (
-                  <View style={{padding: 10}}>
+                  <View style={{ padding: 10 }}>
                     <SkeletonPlaceholder>
                       <SkeletonPlaceholder.Item
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <SkeletonPlaceholder.Item
                           width={280}
                           height={100}
@@ -1699,7 +1698,7 @@ const HomeScreen = ({navigation}) => {
                   <FlatList
                     data={job_posting}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({item, index}) => {
+                    renderItem={({ item, index }) => {
                       const twentyFourHoursAgo = moment(
                         new Date() - 24 * 60 * 60 * 1000,
                       ).format('YYYY-MM-DD');
@@ -1730,7 +1729,7 @@ const HomeScreen = ({navigation}) => {
                               alignItems: 'flex-start',
                               justifyContent: 'center',
                             }}>
-                            <View style={{flex: 1}}>
+                            <View style={{ flex: 1 }}>
                               <Text
                                 style={{
                                   width: 200,
@@ -1800,7 +1799,7 @@ const HomeScreen = ({navigation}) => {
                                 )}
                               </View>
                             </View>
-                            <View style={{alignItems: 'center'}}>
+                            <View style={{ alignItems: 'center' }}>
                               <Text
                                 style={{
                                   fontSize: 12,
@@ -1853,15 +1852,15 @@ const HomeScreen = ({navigation}) => {
                 </Text>
               </View>
               <TabView
-                navigationState={{index, routes}}
+                navigationState={{ index, routes }}
                 renderScene={renderScene}
                 swipeEnabled={false}
                 onIndexChange={setIndex}
                 // style={{
                 //   height: acticityData?.length * 100 + 50 + 10 + 50,
                 // }}
-                style={{flex: 1}}
-                initialLayout={{width: layout.width}}
+                style={{ flex: 1 }}
+                initialLayout={{ width: layout.width }}
                 renderTabBar={props => {
                   return (
                     <TabBar

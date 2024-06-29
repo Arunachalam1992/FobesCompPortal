@@ -47,7 +47,7 @@ const BasicDetails = ({navigation, route}) => {
             },
           },
         );
-        // console.log('Image upload response:', response);
+        console.log('Image upload response:', response);
         common_fn.showToast(response?.data?.message);
       }
     } catch (error) {
@@ -92,6 +92,7 @@ const BasicDetails = ({navigation, route}) => {
           bio: aboutCompany,
         };
         const basic_data = await fetchData.update_company_details(data, token);
+        console.log("basic_data ========== :",basic_data);
         if (basic_data?.message == 'Profile Updated Successfully') {
           navigation.navigate('profileDetails');
         }

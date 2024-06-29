@@ -8,10 +8,16 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
--keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl { *; }
--keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImplSupport { *; }
--keep class com.facebook.imagepipeline.animated.factory.AnimatedFactory { *; }
--keep class com.facebook.imagepipeline.animated.base.AnimatedImage { *; }
--keep class com.facebook.imagepipeline.animated.impl.AnimatedDrawableFactory { *; }
--keep class com.facebook.imagepipeline.animated.impl.AnimatedImageFactory { *; }
--keep class com.facebook.imagepipeline.animated.impl.AnimatedImageCompositor { *; }
+-ignorewarnings
+-dontwarn android.os.ServiceManager*
+-dontwarn com.bun.miitmdid.core.MdidSdkHelper*
+-dontwarn com.bun.miitmdid.interfaces.IIdentifierListener*
+-dontwarn com.bun.miitmdid.interfaces.IdSupplier*
+-dontwarn com.google.firebase.iid.FirebaseInstanceId*
+-dontwarn com.google.firebase.iid.InstanceIdResult*
+-dontwarn com.huawei.hms.ads.identifier.AdvertisingIdClient$Info*
+-dontwarn com.huawei.hms.ads.identifier.AdvertisingIdClient*
+-dontwarn com.tencent.android.tpush.otherpush.OtherPushClient*
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**
+

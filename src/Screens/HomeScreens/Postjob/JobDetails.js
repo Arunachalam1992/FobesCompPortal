@@ -41,7 +41,7 @@ const JobDetails = () => {
   const labels = ['JobDetails', 'Salary & Benefits', 'Advance Information'];
   const userData = useSelector(state => state.UserReducer.userData);
   var {token} = userData;
-  console.log('selectedCategory', selectedCategory)
+  // console.log('selectedCategory', selectedCategory)
 
   const customStyles = {
     stepIndicatorSize: 25,
@@ -102,6 +102,7 @@ const JobDetails = () => {
       // const categories_data = await fetchData.jobcategory(``, token);
       // setCategoriesData(categories_data?.data);
       const roles_data = await fetchData.jobroles(``, token);
+      console.log("Job role =========== : ",roles_data);
       setRoleData(roles_data?.data);
     } catch (error) {
       console.log('error', error);

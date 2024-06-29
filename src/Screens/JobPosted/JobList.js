@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -9,26 +9,27 @@ import {
   View,
 } from 'react-native';
 import Color from '../../Global/Color';
-import {Gilmer} from '../../Global/FontFamily';
-import {categories_data} from '../../Config/Content';
+import { Gilmer } from '../../Global/FontFamily';
+import { categories_data } from '../../Config/Content';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import common_fn from '../../Config/common_fn';
-import {Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import fetchData from '../../Config/fetchData';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const {height} = Dimensions.get('screen');
-const JobList = ({navigation}) => {
+const { height } = Dimensions.get('screen');
+const JobList = ({ navigation }) => {
   const [job_posting, setJobPosting] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [jobLoading, setJobLoading] = useState(false);
-  const [planLimit, setPlanLimit] = useState(0);
+  const [planLimit, setPlanLimit] = useState({});
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const userData = useSelector(state => state.UserReducer.userData);
-  var {token} = userData;
+  var { token } = userData;
+  console.log("token", token);
 
   useEffect(() => {
     setLoading(true);
@@ -45,7 +46,7 @@ const JobList = ({navigation}) => {
       const company_job = await fetchData.job_applicants(``, token);
       setJobPosting(company_job?.data);
       const category_data = await fetchData.job_Categories_list(``, token);
-      setCategoryData([{id: null, name: 'All Jobs'}, ...category_data?.data]);
+      setCategoryData([{ id: null, name: 'All Jobs' }, ...category_data?.data]);
     } catch (error) {
       console.log('error', error);
     }
@@ -53,7 +54,7 @@ const JobList = ({navigation}) => {
 
   const getToggleJobs = async id => {
     try {
-      var data = {candidate_id: id};
+      var data = { candidate_id: id };
       const Saved_Jobs = await fetchData.save_candidated(data, token);
       if (Saved_Jobs) {
         common_fn.showToast(Saved_Jobs?.message);
@@ -88,7 +89,8 @@ const JobList = ({navigation}) => {
   const getPlanLimit = useCallback(async () => {
     try {
       const PlanLimit = await fetchData.plan_limit(``, token);
-      setPlanLimit(PlanLimit?.data?.job_limit);
+      console.log("plan ============ : ", PlanLimit);
+      setPlanLimit(PlanLimit?.data);
     } catch (error) {
       console.log('error', error);
     }
@@ -97,10 +99,10 @@ const JobList = ({navigation}) => {
   return (
     <View style={styles.container}>
       {loading ? (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item
-              style={{flexDirection: 'row', alignItems: 'center'}}>
+              style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SkeletonPlaceholder.Item
                 width={80}
                 height={40}
@@ -125,7 +127,7 @@ const JobList = ({navigation}) => {
                 marginHorizontal={10}
               />
             </SkeletonPlaceholder.Item>
-            <SkeletonPlaceholder.Item style={{marginTop: 20}}>
+            <SkeletonPlaceholder.Item style={{ marginTop: 20 }}>
               <SkeletonPlaceholder.Item
                 width={'100%'}
                 height={100}
@@ -184,7 +186,7 @@ const JobList = ({navigation}) => {
           </SkeletonPlaceholder>
         </View>
       ) : (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               fontSize: 18,
@@ -194,7 +196,7 @@ const JobList = ({navigation}) => {
             }}>
             Jobs Posting ({job_posting?.length})
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <ScrollView showsHorizontalScrollIndicator={false} horizontal>
               {categoryData?.map((item, index) => {
                 const isSelected = item.id === selectedCategoryId;
@@ -227,7 +229,7 @@ const JobList = ({navigation}) => {
             </ScrollView>
           </View>
           {jobLoading ? (
-            <View style={{padding: 10}}>
+            <View style={{ padding: 10 }}>
               <SkeletonPlaceholder>
                 <SkeletonPlaceholder.Item style={{}}>
                   <SkeletonPlaceholder.Item
@@ -291,7 +293,7 @@ const JobList = ({navigation}) => {
             <FlatList
               data={job_posting}
               showsVerticalScrollIndicator={false}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 const twentyFourHoursAgo = moment(
                   new Date() - 24 * 60 * 60 * 1000,
                 ).format('YYYY-MM-DD');
@@ -320,7 +322,7 @@ const JobList = ({navigation}) => {
                         alignItems: 'flex-start',
                         justifyContent: 'center',
                       }}>
-                      <View style={{flex: 1}}>
+                      <View style={{ flex: 1 }}>
                         <Text
                           style={{
                             flex: 1,
@@ -356,7 +358,7 @@ const JobList = ({navigation}) => {
                           </Text>
                         </Text>
                         <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          style={{ flexDirection: 'row', alignItems: 'center' }}>
                           <Text
                             style={{
                               fontSize: 14,
@@ -387,7 +389,7 @@ const JobList = ({navigation}) => {
                           )}
                         </View>
                       </View>
-                      <View style={{alignItems: 'center'}}>
+                      <View style={{ alignItems: 'center' }}>
                         {/* <TouchableOpacity
                           onPress={() => {
                             getToggleJobs(item?.id);
@@ -449,10 +451,10 @@ const JobList = ({navigation}) => {
             mode="contained"
             onPress={async () => {
               try {
-                planLimit == 0
+                planLimit?.job_limit == 0 || planLimit?.job_limit == undefined
                   ? navigation.navigate('BuySubscriptions')
                   : navigation.navigate('JobDetails');
-              } catch (err) {}
+              } catch (err) { }
             }}
             style={{
               backgroundColor: Color.primary,

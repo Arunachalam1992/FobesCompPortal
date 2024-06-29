@@ -68,9 +68,10 @@ const ProfileDetails = ({navigation, route}) => {
       if (
         OrganizationType != 0 &&
         IndustryType != 0 &&
-        TeamSize != 0 &&
-        extablishDate != '' &&
-        Website != ''
+        TeamSize != 0 
+        // &&
+        // extablishDate != '' &&
+        // Website != ''
       ) {
         var data = {
           organization_type_id: OrganizationType,

@@ -49,6 +49,7 @@ const SalaryandBenefits = ({route}) => {
   const [jobTitle] = useState(route.params.jobTitle);
   const [selectedCategory] = useState(route.params.selectedCategory);
   const [selectedRole] = useState(route.params.selectedRole);
+  console.log("Salary Ben ========== : ",selectedRole);
   const [selectedSkills] = useState(route.params.selectedSkills);
   const [selectedTags] = useState(route.params.selectedTags);
   const [description] = useState(route.params.description);
@@ -59,7 +60,7 @@ const SalaryandBenefits = ({route}) => {
   const [BenifitsVisible, setBenifitsVisible] = useState(false);
   const [salaryType, setSalaryType] = useState({});
   const [benifitsData, setBenifitsData] = useState([]);
-  console.log('benifitsData', benifitsData)
+  // console.log('benifitsData', benifitsData)
   const [queryBenefits, setQueryBenefits] = useState('');
   const [selectedBenifits, setSelectedBenifits] = useState([]);
   const [benifitsSelectedItem, setBenifitsSelectedItem] = useState([]);
